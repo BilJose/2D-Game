@@ -21,8 +21,8 @@ public class Weapon : MonoBehaviour
 
     void Awake()
     {
-        firePoint = transform.FindChild("FirePoint");
-        if(firePoint == null)
+        firePoint = transform.Find("FirePoint");
+        if (firePoint == null)
         {
             Debug.LogError("No FirePoint ? ");
         }
@@ -31,41 +31,42 @@ public class Weapon : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-        
+
     {
+
         if (fireRate == 0)
         {
             if (Input.GetButtonDown("Fire1"))
             {
                 Shoot();
             }
-         else
-         {
-                if (Input.GetButton ("Fire1") && Time.time > timeToFire)
-                {
-                    timeToFire = Time.time + 1 /fireRate;
-                    Shoot();
-                }
-         }
+        }
+        else
+        {
+            if (Input.GetButton("Fire1") && Time.time > timeToFire)
+            {
+                timeToFire = Time.time + 1 / fireRate;
+                Shoot();
+            }
         }
     }
     void Shoot()
     {
         Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        Vector2 firePointPosition = new Vector2(firePoint.position.x,firePoint.position.y);
+        Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
 
-        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, mousePosition-firePointPosition, 100, whatToHit);
-        if(Time.time >= timeToSpawnEffect)
+        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, mousePosition - firePointPosition, 100, whatToHit);
+        if (Time.time >= timeToSpawnEffect)
         {
-            Effect ();
+            Effect();
             timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
         }
-        Debug.DrawLine(firePointPosition, (mousePosition - firePointPosition)*100, Color.blue);
-        
-        if(hit.collider != null)
+        Debug.DrawLine(firePointPosition, (mousePosition - firePointPosition) * 100, Color.blue);
+
+        if (hit.collider != null)
         {
             Debug.DrawLine(firePointPosition, hit.point, Color.red);
-            Debug.Log("We hit " + hit.collider.name + " and did " + Damage + " Damage" );
+            Debug.Log("We hit " + hit.collider.name + " and did " + Damage + " Damage");
         }
     }
 
@@ -74,10 +75,10 @@ public class Weapon : MonoBehaviour
         Instantiate(BulletTrailPrefab, firePoint.position, firePoint.rotation);
         Transform clone = Instantiate(MuzzleFlashPrefab, firePoint.position, firePoint.rotation) as Transform; ;
         clone.parent = firePoint;
-        float size = Random.Range(0.6f,0.9f);
+        float size = Random.Range(0.6f, 0.9f);
         clone.localScale = new Vector3(size, size, size);
 
-        Destroy (clone, 0.02f);
+        Destroy(clone.gameObject, 0.02f);
 
     }
 }
