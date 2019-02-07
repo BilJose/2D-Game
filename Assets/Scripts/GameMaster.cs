@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameMaster : MonoBehaviour
 {
     public static GameMaster gm;
-    void Start()
+    void Awake()
     {
         if (gm == null)
         {
@@ -17,7 +17,18 @@ public class GameMaster : MonoBehaviour
     public Transform spawnPrefab;
     public int spawnDelay = 2;
 
-    public IEnumerator RespawnPlayer()
+    public CameraShake cameraShake;
+
+    void Start()
+    {
+        if (cameraShake == null)
+        {
+            Debug.LogError("no Camera Shake");
+        }
+    }
+
+
+    public IEnumerator _RespawnPlayer()
     {
         GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(spawnDelay);
@@ -29,11 +40,21 @@ public class GameMaster : MonoBehaviour
     public static void KillPlayer(Player player)
     {
         Destroy (player.gameObject);
-        gm.StartCoroutine(gm.RespawnPlayer());
+        gm.StartCoroutine(gm._RespawnPlayer());
     }
+
+
 
     public static void KillEnemy(Enemy enemy)
     {
-        Destroy(enemy.gameObject);
+        gm._killEnemy(enemy);
+    }
+
+    public void _killEnemy(Enemy _enemy)
+    {
+       Transform _clone = Instantiate(_enemy.deathParticles, _enemy.transform.position, Quaternion.identity)as Transform;
+        Destroy(_clone.gameObject, 5f);
+        cameraShake.Shake(_enemy.shakeAmt, _enemy.shakeLength);
+        Destroy(_enemy.gameObject);
     }
 }

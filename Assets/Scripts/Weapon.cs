@@ -7,8 +7,13 @@ public class Weapon : MonoBehaviour
 
 
     public float fireRate = 0;
+    public float camShakeAmt = 0.5f;
+    public float camShakeLength = 0.1f;
+    CameraShake camShake;
     public int Damage = 10;
     public LayerMask whatToHit;
+
+
     public Transform MuzzleFlashPrefab;
     public Transform BulletTrailPrefab;
     public Transform HitPrefab;
@@ -26,6 +31,17 @@ public class Weapon : MonoBehaviour
         if (firePoint == null)
         {
             Debug.LogError("No FirePoint ? ");
+        }
+
+
+    }
+
+    void Start()
+    {
+        camShake = GameMaster.gm.GetComponent<CameraShake>();
+        if (camShake == null)
+        {
+            Debug.LogError("no Camera Shake Scripts Found! on GM");
         }
     }
 
@@ -68,7 +84,7 @@ public class Weapon : MonoBehaviour
             if(enemy!= null)
             {
                 enemy.DamageEnemy(Damage);
-                Debug.Log("We hit " + hit.collider.name + " and did " + Damage + " Damage");
+               // Debug.Log("We hit " + hit.collider.name + " and did " + Damage + " Damage");
             }
         }
         if (Time.time >= timeToSpawnEffect)
@@ -103,7 +119,8 @@ public class Weapon : MonoBehaviour
         Destroy(trail.gameObject, 0.04f);
         if(hitNormal != new Vector3(9999, 9999, 9999))
         {
-            Instantiate(HitPrefab, hitPos, Quaternion.FromToRotation(Vector3.right, hitNormal));
+            Transform hitParticles = Instantiate(HitPrefab, hitPos, Quaternion.FromToRotation(Vector3.right, hitNormal)) as Transform;
+            Destroy(hitParticles.gameObject, 0.02f);
         }
      
 
@@ -115,6 +132,8 @@ public class Weapon : MonoBehaviour
         clone.localScale = new Vector3(size, size, size);
 
         Destroy(clone.gameObject, 0.02f);
+
+        camShake.Shake(camShakeAmt,camShakeLength);
 
     }
 }
