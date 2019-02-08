@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -16,17 +15,17 @@ public class StatusIndicator : MonoBehaviour
         {
             Debug.LogError("status indicator;no Health bar Obejct");
         }
-        if (healthBarRect == null)
+        if (healthText == null)
         {
             Debug.LogError("no Health text Obejct");
         }
-   }
+    }
 
     public void SetHealth(int _cur, int _max)
     {
         float _value =(float) _cur / _max;
         healthBarRect.localScale = new Vector3(_value, healthBarRect.localScale.y, healthBarRect.localScale.z);
-        healthText.text = _cur + "/" +_max + "HP";
+        healthText.text = _cur + "/" +_max + " HP";
 
 
     }

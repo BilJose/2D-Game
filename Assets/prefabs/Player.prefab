@@ -567,7 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarRect: {fileID: 1733788544}
-  healtText: {fileID: 18196345}
+  healthText: {fileID: 18196345}
 --- !u!1 &1733788543
 GameObject:
   m_ObjectHideFlags: 0
