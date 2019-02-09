@@ -5,6 +5,15 @@ using UnityEngine;
 public class GameMaster : MonoBehaviour
 {
     public static GameMaster gm;
+
+
+    [SerializeField]
+    private int maxLives = 3;
+    private static int _remainingLives;
+    public static int RemainingLives
+    {
+        get { return _remainingLives; }
+    }
     void Awake()
     {
         if (gm == null)
@@ -12,12 +21,15 @@ public class GameMaster : MonoBehaviour
             gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         }
     }
+    
     public Transform playerPrefab;
     public Transform spawnPoint;
     public Transform spawnPrefab;
     public int spawnDelay = 2;
 
     public CameraShake cameraShake;
+    [SerializeField]
+    private GameObject gameOverUI;
 
     void Start()
     {
@@ -25,8 +37,13 @@ public class GameMaster : MonoBehaviour
         {
             Debug.LogError("no Camera Shake");
         }
+        _remainingLives = maxLives;
     }
-
+    public void EndGame()
+    {
+        Debug.Log("gameOver");
+        gameOverUI.SetActive(true);
+    }
 
     public IEnumerator _RespawnPlayer()
     {
@@ -40,10 +57,16 @@ public class GameMaster : MonoBehaviour
     public static void KillPlayer(Player player)
     {
         Destroy (player.gameObject);
-        gm.StartCoroutine(gm._RespawnPlayer());
+        _remainingLives--;
+        if(_remainingLives<=0)
+        {
+            gm.EndGame();
+        }
+        else
+        {
+            gm.StartCoroutine(gm._RespawnPlayer());
+        }       
     }
-
-
 
     public static void KillEnemy(Enemy enemy)
     {

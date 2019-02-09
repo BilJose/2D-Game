@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaveSpanner : MonoBehaviour
 {
-    public enum SpawnState { Spawning, Counting, Waiting };
+    public enum SpawnState { SPAWNING, COUNTING, WAITING };
     [System.Serializable]
     public class Wave
     {
@@ -18,7 +18,7 @@ public class WaveSpanner : MonoBehaviour
     private int nextWave = 0;
     public int NextWave
     {
-        get { return nextWave + 1; }
+        get { return nextWave +1 ; }
     }
 
     public Transform[] spawnPoints;
@@ -37,7 +37,7 @@ public class WaveSpanner : MonoBehaviour
         get { return state; }
     }
 
-    private SpawnState state = SpawnState.Counting;
+    private SpawnState state = SpawnState.COUNTING;
 
     void Start()
     {
@@ -52,7 +52,7 @@ public class WaveSpanner : MonoBehaviour
     }
     void Update()
     {
-        if (state == SpawnState.Waiting)
+        if (state == SpawnState.WAITING)
         {
             if (!EnemyIsAlive())
             {
@@ -66,7 +66,7 @@ public class WaveSpanner : MonoBehaviour
 
         if (waveCountdown <= 0)
         {
-            if (state != SpawnState.Spawning)
+            if (state != SpawnState.SPAWNING)
             {
                 StartCoroutine(SpawnWave(waves[nextWave]));
             }
@@ -80,7 +80,7 @@ public class WaveSpanner : MonoBehaviour
     void WaveCompleted()
     {
         Debug.Log("wave Completed");
-        state = SpawnState.Counting;
+        state = SpawnState.COUNTING;
         waveCountdown = timeBetweenWaves;
         if (nextWave + 1 > waves.Length - 1)
         {
@@ -112,14 +112,14 @@ public class WaveSpanner : MonoBehaviour
     IEnumerator SpawnWave(Wave _wave)
     {
         Debug.Log("Spwaning Wave " + _wave.name);
-        state = SpawnState.Spawning;
+        state = SpawnState.SPAWNING;
         for (int i = 0; i < _wave.count; i++)
         {
             SpawnEnemy(_wave.enemy);
             yield return new WaitForSeconds(1f / _wave.rate);
         }
 
-        state = SpawnState.Waiting;
+        state = SpawnState.WAITING;
         yield break;
     }
 

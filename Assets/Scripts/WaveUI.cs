@@ -49,10 +49,10 @@ void Update()
     {
         switch (spawner.State)
         {
-            case WaveSpanner.SpawnState.Counting:
+            case WaveSpanner.SpawnState.COUNTING:
                 UpdateCountingUI();
                 break;
-            case WaveSpanner.SpawnState.Spawning:
+            case WaveSpanner.SpawnState.SPAWNING:
                 UpdateSpawningUI();
                 break;
         }
@@ -60,7 +60,7 @@ void Update()
     }
     void UpdateCountingUI()
     {
-        if (previousState!= WaveSpanner.SpawnState.Counting)
+        if (previousState!= WaveSpanner.SpawnState.COUNTING)
         {
             waveAnimator.SetBool("WaveIncoming", false);
             waveAnimator.SetBool("WaveCountdown", true);
@@ -71,11 +71,11 @@ void Update()
     }
     void UpdateSpawningUI()
     {
-        if (previousState != WaveSpanner.SpawnState.Spawning)
+        if (previousState != WaveSpanner.SpawnState.SPAWNING)
         {
             waveAnimator.SetBool("WaveCountdown", false);
             waveAnimator.SetBool("WaveIncoming", true);
-            waveCountdownText.text = spawner.NextWave.ToString();
+            WaveCountText.text = spawner.NextWave.ToString();
             //Debug.Log("Spawning");
         }
     }
