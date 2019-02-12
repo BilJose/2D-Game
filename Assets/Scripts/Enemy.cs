@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
 
 
     public Transform deathParticles;
+    public string deathSoundName = "Explosion";
 
     public float shakeAmt = 0.3f;
     public float shakeLength = 0.1f;

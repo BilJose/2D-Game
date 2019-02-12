@@ -19,9 +19,12 @@ public class Weapon : MonoBehaviour
     public Transform HitPrefab;
     public float effectSpawnRate = 10;
 
+    public string weaponShootSound = "DefaultShot";
+
     float timeToSpawnEffect = 0;
     float timeToFire = 0;
     Transform firePoint;
+    AudioManager audioManager;
 
     // Start is called before the first frame update
 
@@ -42,6 +45,11 @@ public class Weapon : MonoBehaviour
         if (camShake == null)
         {
             Debug.LogError("no Camera Shake Scripts Found! on GM");
+        }
+        audioManager = AudioManager.instance;
+        if(audioManager == null)
+        {
+            Debug.LogError("no sound found");
         }
     }
 
@@ -134,6 +142,10 @@ public class Weapon : MonoBehaviour
         Destroy(clone.gameObject, 0.02f);
 
         camShake.Shake(camShakeAmt,camShakeLength);
+
+
+
+        audioManager.PlaySound(weaponShootSound);
 
     }
 }
