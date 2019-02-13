@@ -5,7 +5,7 @@ using Pathfinding;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
-public class EnemieAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
     public Transform target;
     public float updateRate = 2f;

@@ -36,6 +36,11 @@ public class GameMaster : MonoBehaviour
     public CameraShake cameraShake;
     [SerializeField]
     private GameObject gameOverUI;
+    [SerializeField]
+    private GameObject upgradeMenu;
+
+    public delegate void UpgradeMenuCallBack(bool active);
+    public UpgradeMenuCallBack onToggleUpgradeMenu;
 
     private AudioManager audioManager;
 
@@ -51,6 +56,18 @@ public class GameMaster : MonoBehaviour
         {
             Debug.LogError("no adio manager found");
         }
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ToggleUpgradeMenu();
+        }
+    }
+    private void ToggleUpgradeMenu()
+    {
+        upgradeMenu.SetActive(!upgradeMenu.activeSelf);
+        onToggleUpgradeMenu.Invoke(upgradeMenu);
     }
     public void EndGame()
     {

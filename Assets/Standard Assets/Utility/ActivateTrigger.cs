@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Utility
 {

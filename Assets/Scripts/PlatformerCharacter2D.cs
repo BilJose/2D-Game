@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace UnityStandardAssets._2D
 {
+    
     public class PlatformerCharacter2D : MonoBehaviour
     {
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
@@ -10,6 +11,9 @@ namespace UnityStandardAssets._2D
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+
+        [SerializeField]
+        string landingSoundName = "LandingFootsteps";
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -22,7 +26,11 @@ namespace UnityStandardAssets._2D
 
 
         Transform playerGraphics;
-        private void Awake()
+
+
+        AudioManager audioManager;
+
+        void Awake()
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
@@ -35,9 +43,18 @@ namespace UnityStandardAssets._2D
                     }
         }
 
-
+        void Start()
+        {
+            audioManager = AudioManager.instance;
+            if (audioManager == null)
+            {
+                Debug.LogError("no auido Manager");
+            }
+        }
         private void FixedUpdate()
         {
+            bool wasGrounded = m_Grounded;
+
             m_Grounded = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -49,6 +66,10 @@ namespace UnityStandardAssets._2D
                     m_Grounded = true;
             }
             m_Anim.SetBool("Ground", m_Grounded);
+            if(wasGrounded != m_Grounded && m_Grounded== true)
+            {
+                audioManager.PlaySound(landingSoundName);
+            }
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);

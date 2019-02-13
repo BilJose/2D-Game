@@ -107,6 +107,13 @@ MonoBehaviour:
     randomVol: 0
     randomPit: 0
     loop: 0
+  - name: LandingFootsteps
+    clip: {fileID: 8300000, guid: c5a194fa4640b8e44bebb725b2c8a9cc, type: 3}
+    volume: 0.8
+    pitch: 1
+    randomVol: 0
+    randomPit: 0
+    loop: 0
   - name: GameOver
     clip: {fileID: 8300000, guid: bf10c14357bd1484c9866d4ec8fa6654, type: 3}
     volume: 0.8

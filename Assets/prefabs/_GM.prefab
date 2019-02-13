@@ -108,6 +108,7 @@ MonoBehaviour:
   spawnDelay: 3
   cameraShake: {fileID: 4313072459047577555}
   gameOverUI: {fileID: 0}
+  upgradeMenu: {fileID: 0}
 --- !u!114 &4313072459047577555
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyAI))]
 public class Enemy : MonoBehaviour
 {
     [System.Serializable]
@@ -32,6 +33,7 @@ public class Enemy : MonoBehaviour
     public Transform deathParticles;
     public string deathSoundName = "Explosion";
 
+
     public float shakeAmt = 0.3f;
     public float shakeLength = 0.1f;
 
@@ -49,6 +51,12 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("no DeathParticles");
         }
+        GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
+    }
+    void OnUpgradeMenuToggle(bool active)
+    {
+        GetComponent<EnemyAI>().enabled = !active;
+      
     }
 
     public void DamageEnemy(int damage)
