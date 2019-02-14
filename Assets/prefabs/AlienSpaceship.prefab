@@ -177,14 +177,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 849703905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 587cebf5f5edd9e4d8956fda3a4e067e, type: 3}
+  m_Script: {fileID: 11500000, guid: 13eb6d7c145b8f247924d6dde996897f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
     maxHealth: 100
     damage: 40
-  deathParticles: {fileID: 2670283465658305042, guid: d8c0fc19cc96f6a40b6fbdfddb2f52c2,
+  deathParticles: {fileID: 3666642399818489086, guid: ad28d514c95027744bd1de0ec0264c53,
     type: 3}
+  deathSoundName: Explosion
   shakeAmt: 0.3
   shakeLength: 0.1
   statusIndicator: {fileID: 1584804054}

@@ -6,8 +6,8 @@ public class GameMaster : MonoBehaviour
 {
     public static GameMaster gm;
 
-
-
+    [SerializeField]
+    private WaveSpanner waveSpanner;
 
     [SerializeField]
     private int maxLives = 3;
@@ -16,6 +16,9 @@ public class GameMaster : MonoBehaviour
     {
         get { return _remainingLives; }
     }
+    [SerializeField]
+    private int startingMoney; 
+    public static int Money;
     void Awake()
     {
         if (gm == null)
@@ -51,6 +54,8 @@ public class GameMaster : MonoBehaviour
             Debug.LogError("no Camera Shake");
         }
         _remainingLives = maxLives;
+        Money = startingMoney;
+
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {
@@ -67,7 +72,8 @@ public class GameMaster : MonoBehaviour
     private void ToggleUpgradeMenu()
     {
         upgradeMenu.SetActive(!upgradeMenu.activeSelf);
-        onToggleUpgradeMenu.Invoke(upgradeMenu);
+        waveSpanner.enabled = !upgradeMenu.activeSelf;
+        onToggleUpgradeMenu.Invoke(upgradeMenu.activeSelf);
     }
     public void EndGame()
     {
@@ -110,6 +116,9 @@ public class GameMaster : MonoBehaviour
     {
 
         audioManager.PlaySound(_enemy.deathSoundName);
+
+        Money += _enemy.moneyDrop;
+        audioManager.PlaySound("Money");
 
        Transform _clone = Instantiate(_enemy.deathParticles, _enemy.transform.position, Quaternion.identity)as Transform;
         Destroy(_clone.gameObject, 5f);

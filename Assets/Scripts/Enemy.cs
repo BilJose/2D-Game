@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyAI))]
@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
 
     public Transform deathParticles;
     public string deathSoundName = "Explosion";
-
+    public int moneyDrop = 1;
 
     public float shakeAmt = 0.3f;
     public float shakeLength = 0.1f;
@@ -47,14 +47,20 @@ public class Enemy : MonoBehaviour
         {
             statusIndicator.SetHealth(stats.curHealth, stats.maxHealth);
 
-        }if(deathParticles == null)
+        }
+        GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
+
+
+        if (deathParticles == null)
         {
             Debug.LogError("no DeathParticles");
         }
-        GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
+        
     }
     void OnUpgradeMenuToggle(bool active)
     {
+         
+        
         GetComponent<EnemyAI>().enabled = !active;
       
     }
@@ -82,5 +88,8 @@ public class Enemy : MonoBehaviour
 
         }
     }
-
+    void OnDestroy()
+    {
+        GameMaster.gm.onToggleUpgradeMenu -= OnUpgradeMenuToggle;
+    }
 }

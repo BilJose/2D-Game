@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1681178425}
   - component: {fileID: 4313072459047577555}
   - component: {fileID: 6720998517909600652}
+  - component: {fileID: 603736417}
   m_Layer: 0
   m_Name: _GM
   m_TagString: GM
@@ -97,7 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71648721015d4f54ca1462cca73548ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveSpanner: {fileID: 6720998517909600652}
   maxLives: 3
+  startingMoney: 50
   playerPrefab: {fileID: 400002, guid: 87a2357765801c34292d6718d8b4d770, type: 3}
   spawnPoint: {fileID: 970456906}
   spawnPrefab: {fileID: 1671966935993611646, guid: 888f258662168b8418fd134be4a69fff,
@@ -152,6 +155,21 @@ MonoBehaviour:
   - {fileID: 7769755947003576876}
   - {fileID: 1618615438947655136}
   timeBetweenWaves: 5
+--- !u!114 &603736417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681178424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30bce8c2be289974ba4391eb1cba5d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthRegenRate: 2
+  movementSpeed: 10
 --- !u!1001 &2091890633333012230
 PrefabInstance:
   m_ObjectHideFlags: 0
